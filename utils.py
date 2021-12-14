@@ -1,5 +1,12 @@
 ## All utilities
 # utilities for the thing
+# rearrange
+### CHANGE PASSWORD IN GRAPHSAPCE FUNC!!!
+
+from graphspace_python.api.client import GraphSpace
+from graphspace_python.graphs.classes.gsgraph import GSGraph
+import time
+import csv
 
 ## author: Ananke
 ## NOTE: Edited from Aliya's read_ppi function above!
@@ -71,14 +78,12 @@ def edge_to_adj(edge_list):
     return(adjacency_list)
 
 def remove_duplicates(all_triangles):
+    sorted_triangles = []
     for triangle in all_triangles:
         assert(len(triangle) == 3)
-        remaining_permutations = []
-        for perm in remaining_permutations:
-            if perm in all_triangles:
-                all_triangles.remove(perm)
-            
-    return all_triangles
+        print('sorted triangle' +str(sorted(triangle)))
+        sorted_triangles += [tuple(sorted(triangle))]
+    return list(set(sorted_triangles))
 
 def get_all_triangles(node_list, adj_list):
     all_triangles = []
@@ -86,11 +91,21 @@ def get_all_triangles(node_list, adj_list):
         all_triangles += get_triangles_for(node, adj_list)
     return all_triangles
 
+
+
+def get_highlighted_edges(all_triangles):
+    highlighted_edges = []
+    for triangle in all_triangles:
+        highlighted_edges += [[triangle[0], triangle[1]], 
+                              [triangle[0], triangle[2]],
+                              [triangle[1], triangle[2]]]
+    # Set them so that they're easier to look up in viz_graph
+    return set(highlighted_edges)
+
 ### get master triangle dictionary
 # uses all the triangles
 
 def get_triangle_dictionary(all_triangles, pos_nodes, neg_nodes, all_keys):
-    assert('neg_neg_neg_pos_pos_u' not in all_keys)
     
     # Initialize an empty dictionary with all possible combinations of labels
     triangles_dict = {}
@@ -238,4 +253,75 @@ def read_labeled_nodes_example():
                         neg_nodes.append(n)
 
     return node_info, labeled_nodes, pos_nodes, neg_nodes
+
+
+
+## author: Anna Ritz, modified by aliya  ghassaei
+## Posts the graph G to GraphSpace and shares it with the group.
+## Prompts the user for graph name, email, and password.
+## param G: GSGraph object
+## param post_group: share with the group (default True).
+##  (note: you can prevent sharing by specifying post_group=False)
+
+# how to make public?
+
+def post_to_graphspace(G,post_group=True):
+    ## connect to the GraphSpace client.
+    group='BIO331F21'
+    graph_name = input('Enter Graph Name:')
+    G.set_name(graph_name)
+    #email = input('Enter Email:')
+    #password = input('Enter Password:')
+    #gs = GraphSpace(email,password)
+    gs = GraphSpace('aghassaei@reed.edu', 'contrasenajaja24')
+    print('GraphSpace successfully connected.')
+
+    try: ## If graph does not yet exist...
+        graph = gs.post_graph(G)
+        if post_group:
+            gs.share_graph(graph=graph,group_name=group)
+    except: ## Otherwise, graph exists.
+        print('Graph exists! Removing and re-posting (takes a few secs)...')
+        graph = gs.get_graph(graph_name=graph_name)
+        gs.delete_graph(graph=graph)
+        time.sleep(1) # pause for 1 second
+        graph = gs.post_graph(G)
+        if post_group:
+            gs.share_graph(graph=graph,group_name=group)
+    #print('Done!')
+    return
+
+#############
+# Builds GraphSpace graph from reduced set of nodes and edges
+# Modified from Anna's viz_graph function in build-example.py
+# INPUTS: pruned node list, pruned edge list, predctions as dictionary, zip/sqh
+# RETURNS: None, just posts graph
+###akdjfaksdf cgeck spelling on nmii
+#############
+def viz_graph(nodes, edges, highlighted_edges, pos_nodes, neg_nodes, NMII = ['sqh', 'zip']):
+    print('Visualizing graph...')
+    G = GSGraph() # Create a graph object
+    G.set_tags(['HW4']) ## tags help you organize your graphs
+    for n in nodes:
+        if n in set(pos_nodes): 
+            color = '#d2639e' 
+        elif n in set(neg_nodes):
+            color = '#63d297'
+        elif n in NMII:
+            color = '#e7e7e7'
+        #random color
+        else:
+            color = '#ee4443'
+        G.add_node(n,label=n)    
+        G.add_node_style(n,color=color,shape='ellipse',height=40,width=40)
+        # popup?
+    for edge in edges:
+        if edge in highlighted_edges or [edge[1], edge[0]] in highlighted_edges:
+            G.add_edge(edge[0], edge[1])
+            G.add_edge_style(edge[0], edge[1],width=4)
+        else:
+            G.add_edge(edge[0], edge[1])
+            G.add_edge_style(edge[0], edge[1],width=2)
+    post_to_graphspace(G)
+    return
 

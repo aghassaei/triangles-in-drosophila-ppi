@@ -35,6 +35,10 @@ make pi chart?
 
 maybe want to do 3 different graphs
 
+### Citations
+
+That is ok! Make sure you link to the original fly interactome GitHub url, and you can copy the tables of the GO terms from the NMII README.md file. Those are also public (from the Gene Ontology website)
+
 
 # files included
 

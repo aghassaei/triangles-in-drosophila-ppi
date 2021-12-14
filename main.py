@@ -1,6 +1,8 @@
-#main program
-# remove duplicates in all triangles, figure this out
-# use a dictionary
+# main program
+# make the separate adj file
+# comment my functions
+# prune adj list
+# remove old utils
 
 from utils import*
 def main():
@@ -30,6 +32,11 @@ def main():
     triangles_dict = get_triangle_dictionary(all_triangles, pos_nodes, neg_nodes, all_keys)
     #assert(len(triangle_dict.keys() == ?))
     if verbose_tri_dict: print('triangles_dict = \n'+str(triangles_dict) +'\n')
+    
+    
+    # Post to GraphSpace
+    
+    
     return 0
 
 
@@ -37,9 +44,9 @@ def main():
 num_edges = 13
 num_nodes = 10
 verbose_read = False
-verbose_adj = True
-verbose_tri = True
-verbose_tri_dict = True
+verbose_adj = False
+verbose_tri = False
+verbose_tri_dict = False
 
 all_keys = ['pos_pos_pos_', 'pos_pos_neg_', 'pos_neg_neg_', 'neg_neg_neg_',
             'pos_pos_u_', 'pos_u_u_', 'neg_neg_u_', 'neg_u_u_', 'u_u_u_', 'neg_pos_u_']
