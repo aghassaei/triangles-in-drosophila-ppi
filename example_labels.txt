@@ -1,5 +1,5 @@
-#Node #Label
-u0 p
-u1 p
-u2 n
-u3 n
+#Name #Label
+u0 Positive
+u1 Positive
+u2 Negative
+u3 Negative
