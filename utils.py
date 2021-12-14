@@ -71,15 +71,14 @@ def edge_to_adj(edge_list):
     return(adjacency_list)
 
 def remove_duplicates(all_triangles):
-    
-    # Set so that it's easier to look up
-    already_seen = {}
     for triangle in all_triangles:
-        all_permutations = {}
-        for perm in all_permutations:
-            if perm not in already_seen:
-                already_seen += {perm}
-    return list(already_seen)
+        assert(len(triangle) == 3)
+        remaining_permutations = []
+        for perm in remaining_permutations:
+            if perm in all_triangles:
+                all_triangles.remove(perm)
+            
+    return all_triangles
 
 def get_all_triangles(node_list, adj_list):
     all_triangles = []
@@ -91,19 +90,23 @@ def get_all_triangles(node_list, adj_list):
 # uses all the triangles
 
 def get_triangle_dictionary(all_triangles, pos_nodes, neg_nodes, all_keys):
+    assert('neg_neg_neg_pos_pos_u' not in all_keys)
+    
     # Initialize an empty dictionary with all possible combinations of labels
     triangles_dict = {}
     for key in all_keys:
+        print('Initializing keys, key = '+str(key)+' len = '+str(len(key)))
+        assert(len(key) == 12 or len(key) == 10 or len(key) == 8 or len(key) == 6)
         triangles_dict[key] = []
-    print(triangles_dict)
-    print('\n')
-    print('len triangles_dict = '+str(len(triangles_dict)))
-    print('len all keys = '+str(len(all_keys)))
+    #print(triangles_dict)
+    #print('\n')
+    #print('len triangles_dict = '+str(len(triangles_dict)))
+    #print('len all keys = '+str(len(all_keys)))
     assert(len(triangles_dict) == len(all_keys))
     for triangle in all_triangles:
-        print('current triangle in get_triangle_dict = '+str(triangle))
+        #print('current triangle in get_triangle_dict = '+str(triangle))
         assert(len(triangle) == 3)
-        key = get_key(get_tag(triangle, pos_nodes, neg_nodes))
+        key = get_tag(triangle, pos_nodes, neg_nodes)
         triangles_dict[key] += [triangle]
     return triangles_dict
         
@@ -118,8 +121,7 @@ def get_triangles_for(node, adj_list):
                 #print(u, v)
                 #print('\n')
                 nodes_triangles += [(node, u, v)]
-                #(?) not appending correctly
-            #else: print("not triangle")
+
     return nodes_triangles
 
 def get_node_label(node, pos_nodes, neg_nodes):
@@ -129,7 +131,7 @@ def get_node_label(node, pos_nodes, neg_nodes):
         label = 'neg'
     else:
         label = 'u'
-        print('unlabeled node = '+str(node))
+
     return label
 
 def get_tag(triangle, pos_nodes, neg_nodes):
@@ -141,7 +143,7 @@ def get_tag(triangle, pos_nodes, neg_nodes):
     return get_key(tag)
 
 def get_key(tag):
-    
+    assert(len(tag) == 12 or len(tag) == 10 or len(tag) == 8 or len(tag) == 6)
     # If all nodes are positive
     if tag == 'pos_pos_pos_':
         return tag

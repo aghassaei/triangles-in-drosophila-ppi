@@ -1,5 +1,6 @@
 #main program
 # remove duplicates in all triangles, figure this out
+# use a dictionary
 
 from utils import*
 def main():
@@ -15,7 +16,7 @@ def main():
     # Make adjacency list
     adj_list = edge_to_adj(edge_list)
     assert(len(adj_list) == num_nodes)
-    if verbose_adj: print(adj_list)
+    if verbose_adj: print('ADJ_LIST = '+str(adj_list))
     
     #get pruned adj list
     
@@ -36,12 +37,12 @@ def main():
 num_edges = 13
 num_nodes = 10
 verbose_read = False
-verbose_adj = False
+verbose_adj = True
 verbose_tri = True
 verbose_tri_dict = True
 
-all_keys = ['pos_pos_pos_', 'pos_pos_neg_', 'pos_neg_neg_', 'neg_neg_neg_'
-            'pos_pos_u', 'pos_u_u_', 'neg_neg_u_', 'neg_u_u_', 'u_u_u_', 'neg_pos_u_']
+all_keys = ['pos_pos_pos_', 'pos_pos_neg_', 'pos_neg_neg_', 'neg_neg_neg_',
+            'pos_pos_u_', 'pos_u_u_', 'neg_neg_u_', 'neg_u_u_', 'u_u_u_', 'neg_pos_u_']
 
 if __name__ == '__main__':
     main()
