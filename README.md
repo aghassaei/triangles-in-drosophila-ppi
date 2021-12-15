@@ -1,6 +1,9 @@
 # triangles
 final project
 
+
+ask them if they want me to link the girhub into their things
+
 # plan
 
 make toy graph to answer question: how do i want to figure out what/how many triangles 

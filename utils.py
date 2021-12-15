@@ -8,123 +8,156 @@ from graphspace_python.graphs.classes.gsgraph import GSGraph
 import time
 import csv
 
-## author: Ananke
-## NOTE: Edited from Aliya's read_ppi function above!
 ################
-## INPUTS: file name as a string 
-## To test: use '../../inputs/test-fly-interactome.txt'
-## To run: use '../../inputs/flybase-interactome.txt'
-## must call this from within your own directory
-## RETURNS:
+## Author: Ananke Krishnan and Aliya Ghassaei
+## INPUTS: file name as a string if using example
+## OUTPUTS:
 ## edge_list: a list of edges (as lists)
 ## node_list: a list of nodes (as strings)
 ## edge_dictionary: a dictionary with edges (keys) and edge weights as lists (values)
 
-## Edited to try and decrease runtime
-# It seems to be working on the flybase_interactome file and I was able to verify its accuracy using the test file
-
-################
-
-def read_in(filename):
-    file = open(filename, 'r')      #open file, store contents in variable text, close file
+def read_in(filename='flybase-interactome.txt'):
+    # Open file, store contents in variable text, close file
+    file = open(filename, 'r')      
     text = file.read()
     file.close()
     text = text.split()
     
-    if text[0] == '#Name' or text[0] == '#': del text[0:2] #removes column headers from text
-                   
-    edge_list = [] #initialize edge list, node list
+    # Remove column headers from text
+    if text[0] == '#Name' or text[0] == '#': del text[0:2]
+           
+    # Initialize edge list, node list        
+    edge_list = [] 
     node_list = []                       
    
-    for i in range(0, len(text), 2): #loops through each line of file
-        new_edge = [text[i], text[i+1]] #selects both parts of edge
-        #print(new_edge)
+    # Loop through each line of file
+    for i in range(0, len(text), 2):
+        # Select both parts of an edge
+        new_edge = [text[i], text[i+1]]
         
-        #check for duplicates
+        # Check for duplicates
         if (new_edge not in edge_list) and ([new_edge[1], new_edge[0]] not in edge_list):
             edge_list.append(new_edge)
 
-        #add new nodes to node list
+        # Add new nodes to node list
         node_list.append(new_edge[0]) 
         node_list.append(new_edge[1])
-   
-    node_list = list(set(node_list)) #remove duplicate nodes
+
+    # Remove duplicate nodes
+    node_list = list(set(node_list))
     
     return node_list, edge_list
 
-## author: Ananke Krishnan
-# edited by Mikhail Ostrovsky for speed
-#edge_to_adjacency
-#input: edge list
-#output: adjacency list (dictionary with nodes as keys and values as neighbors)
+################
+## Author: Ananke Krishnan and Mikhail Ostrovsky
+## INPUTS: list of edges
+## OUTPUTS: adjacency list (dictionary with nodes as keys and values as neighbors)
+
 def edge_to_adj(edge_list):
 
-    adjacency_list = {}
+    # Initialize adjacency list
+    adj_list = {}
     
-    for i in edge_list: #loops through every edge (list of 2 nodes)
-        #for node 1 of the edge
-        if i[0] not in adjacency_list: #if it is not already present in the adj list add it
-            adjacency_list[i[0]] = []
-            adjacency_list[i[0]].append(i[1])
-        else: #add to both each node to both nodes in list because there is a new connection
-            adjacency_list[i[0]].append(i[1])
-        #for node 2 of the edge
-        if i[1] not in adjacency_list:  #if it is not already present in the adj list add it
-            adjacency_list[i[1]] = []
-            adjacency_list[i[1]].append(i[0])
-        else:
-            adjacency_list[i[1]].append(i[0])
-
-    return(adjacency_list)
-
-def remove_duplicates(all_triangles):
-    sorted_triangles = []
-    for triangle in all_triangles:
-        assert(len(triangle) == 3)
-        print('sorted triangle' +str(sorted(triangle)))
-        sorted_triangles += [tuple(sorted(triangle))]
-    return list(set(sorted_triangles))
-
-def get_all_triangles(node_list, adj_list):
-    all_triangles = []
-    for node in node_list:
-        all_triangles += get_triangles_for(node, adj_list)
-    return all_triangles
-
-
-
-def get_highlighted_edges(all_triangles):
-    highlighted_edges = []
-    for triangle in all_triangles:
-        highlighted_edges += [[triangle[0], triangle[1]], 
-                              [triangle[0], triangle[2]],
-                              [triangle[1], triangle[2]]]
-    # Set them so that they're easier to look up in viz_graph
-    return set(highlighted_edges)
-
-### get master triangle dictionary
-# uses all the triangles
-
-def get_triangle_dictionary(all_triangles, pos_nodes, neg_nodes, all_keys):
-    
-    # Initialize an empty dictionary with all possible combinations of labels
-    triangles_dict = {}
-    for key in all_keys:
-        print('Initializing keys, key = '+str(key)+' len = '+str(len(key)))
-        assert(len(key) == 12 or len(key) == 10 or len(key) == 8 or len(key) == 6)
-        triangles_dict[key] = []
-    #print(triangles_dict)
-    #print('\n')
-    #print('len triangles_dict = '+str(len(triangles_dict)))
-    #print('len all keys = '+str(len(all_keys)))
-    assert(len(triangles_dict) == len(all_keys))
-    for triangle in all_triangles:
-        #print('current triangle in get_triangle_dict = '+str(triangle))
-        assert(len(triangle) == 3)
-        key = get_tag(triangle, pos_nodes, neg_nodes)
-        triangles_dict[key] += [triangle]
-    return triangles_dict
+    # Loop through every edge
+    for i in edge_list:
         
+        # Add first node if not in adjacency list
+        if i[0] not in adj_list:
+            adj_list[i[0]] = []
+            adj_list[i[0]].append(i[1])
+        
+        # Otherwise, add second node to existing value mapped to first node
+        else: 
+            adj_list[i[0]].append(i[1])
+            
+        # Add second node if not in adjacency list
+        if i[1] not in adj_list:
+            adj_list[i[1]] = []
+            adj_list[i[1]].append(i[0])
+            
+        # Otherwise, add first node to existing value mapped to second node
+        else:
+            adj_list[i[1]].append(i[0])
+
+    return adj_list
+
+##
+# trims adj list
+def trim_graph(node_list, adj_list, edge_list):
+    for node in node_list:
+        if node != 'sqh':
+            if node not in adj_list['sqh']:
+                for neighbor in adj_list['sqh']:
+                    # create if not neighbor of neighbor function
+                    # do same for zip
+
+################
+## Author: Ingrid Zoll, modified by Aliya Ghassaei
+##
+def read_labeled_nodes_example():
+    posneg_file = 'example_labels.txt'
+    # initializing dictionary and lists
+    node_info = {}
+    labeled_nodes = []
+    pos_nodes = []
+    neg_nodes = []
+
+    with open(posneg_file) as fin:
+        for line in fin: # for each line
+            n, pos_neg = line.strip().split() # separate the two items
+            if n != "#Name": # if the line is not the header (in this case, the header starts with "#Name")
+                if n not in labeled_nodes: # if the node is not a duplicate
+                    labeled_nodes.append(n) # add it to the full node list
+                    node_info[n] = [pos_neg] # add info to full node dictionary
+                    if pos_neg == "Positive": # if the node is positive, add to positive list
+                        pos_nodes.append(n)
+                    elif pos_neg == "Negative": # if node is negative, add to negative list
+                        neg_nodes.append(n)
+
+    return node_info, labeled_nodes, pos_nodes, neg_nodes
+
+################
+## Author: Ingrid Zoll
+## INPUTS: None, labeled node file is hardcoded
+## OUTPUTS:
+## node_info: dictionary, with format {node: [id, pos_neg, annotation], etc}
+## labeled_nodes: list of all nodes in the labeled-nodes file
+## pos_nodes and neg_nodes: lists of positive and negative labeled nodes, respectively.
+## fix notes about running as necessary, if i decide to put it in a folder
+def read_labeled_nodes():
+    posneg_file = 'labeled-nodes.txt'
+    
+    # Initialize dictionary and lists
+    node_info = {}
+    labeled_nodes = []
+    pos_nodes = []
+    neg_nodes = []
+    
+    # Open labeled nodes file
+    with open(posneg_file) as fin:
+        for line in fin: 
+            
+            # Separate the four items
+            n, ID, pos_neg, annotation = line.strip().split()
+            
+            # If the line is not the header (in this case, the header starts with "#Name")
+            if n != "#Name": 
+                # Add node to node list and info to dictionary if it's not a duplicate
+                if n not in labeled_nodes: 
+                    labeled_nodes.append(n)
+                    node_info[n] = [ID, pos_neg, annotation]
+                    
+                    # Add node to positive or negative node list
+                    if pos_neg == "Positive":
+                        pos_nodes.append(n)
+                    elif pos_neg == "Negative":
+                        neg_nodes.append(n)
+
+    return node_info, labeled_nodes, pos_nodes, neg_nodes
+
+
+
+
 #make sets to make easier
 def get_triangles_for(node, adj_list):
     nodes_triangles = []
@@ -139,6 +172,24 @@ def get_triangles_for(node, adj_list):
 
     return nodes_triangles
 
+
+
+#######
+def get_all_triangles(node_list, adj_list):
+    all_triangles = []
+    for node in node_list:
+        all_triangles += get_triangles_for(node, adj_list)
+    return all_triangles
+
+######
+def remove_duplicates(all_triangles):
+    sorted_triangles = []
+    for triangle in all_triangles:
+        assert(len(triangle) == 3)
+        #print('sorted triangle' +str(sorted(triangle)))
+        sorted_triangles += [tuple(sorted(triangle))]
+    return list(set(sorted_triangles))
+
 def get_node_label(node, pos_nodes, neg_nodes):
     if node in pos_nodes:
         label = 'pos'
@@ -148,15 +199,6 @@ def get_node_label(node, pos_nodes, neg_nodes):
         label = 'u'
 
     return label
-
-def get_tag(triangle, pos_nodes, neg_nodes):
-    assert(len(triangle) == 3)
-    tag = ''    
-    for node in triangle:
-        label = get_node_label(node, pos_nodes, neg_nodes)
-        tag+= label +str('_')
-    return get_key(tag)
-
 def get_key(tag):
     assert(len(tag) == 12 or len(tag) == 10 or len(tag) == 8 or len(tag) == 6)
     # If all nodes are positive
@@ -180,8 +222,7 @@ def get_key(tag):
         return 'pos_pos_u'
         
     # If one positive, two unlabeled
-    elif tag == 'pos_u_u_' or tag == 'u_pos_u_' or tag == 'u_u_pos_':
-        return 'pos_u_u_'
+    elif tag in {'pos_u_u_', 'u_pos_u_', 'u_u_pos_'}: return 'pos_u_u_'
        
             
     # If two negative, one unlabeled
@@ -200,61 +241,49 @@ def get_key(tag):
         return 'neg_pos_u_'
     else: print('exception = ' +tag)
 
-    return tag
+    return 0
 
-# author: ingrid zoll
-# input: none. it automatically gets the labeled nodes file when it is run
-# outputs: has 4 different outputs
-## node_info: dictionary, with format {node: [id, pos_neg, annotation], etc}
-## labeled_nodes: list of all nodes in the labeled-nodes file
-## pos_nodes and neg_nodes: lists of positive and negative labeled nodes, respectively.
-# code to run: node_info, labeled_nodes, pos_nodes, neg_nodes = utils.read_labeled_nodes()
-# NOTE: MUST BE RUN IN YOUR OWN DIRECTORY.
-def read_labeled_nodes():
-    posneg_file = '../../inputs/labeled-nodes.txt'
-    # initializing dictionary and lists
-    node_info = {}
-    labeled_nodes = []
-    pos_nodes = []
-    neg_nodes = []
-
-    with open(posneg_file) as fin:
-        for line in fin: # for each line
-            n, ID, pos_neg, annotation = line.strip().split() # separate the four items
-            if n != "#Name": # if the line is not the header (in this case, the header starts with "#Name")
-                if n not in labeled_nodes: # if the node is not a duplicate
-                    labeled_nodes.append(n) # add it to the full node list
-                    node_info[n] = [ID, pos_neg, annotation] # add info to full node dictionary
-                    if pos_neg == "Positive": # if the node is positive, add to positive list
-                        pos_nodes.append(n)
-                    elif pos_neg == "Negative": # if node is negative, add to negative list
-                        neg_nodes.append(n)
-
-    return node_info, labeled_nodes, pos_nodes, neg_nodes
-
-def read_labeled_nodes_example():
-    posneg_file = 'example_labels.txt'
-    # initializing dictionary and lists
-    node_info = {}
-    labeled_nodes = []
-    pos_nodes = []
-    neg_nodes = []
-
-    with open(posneg_file) as fin:
-        for line in fin: # for each line
-            n, pos_neg = line.strip().split() # separate the two items
-            if n != "#Name": # if the line is not the header (in this case, the header starts with "#Name")
-                if n not in labeled_nodes: # if the node is not a duplicate
-                    labeled_nodes.append(n) # add it to the full node list
-                    node_info[n] = [pos_neg] # add info to full node dictionary
-                    if pos_neg == "Positive": # if the node is positive, add to positive list
-                        pos_nodes.append(n)
-                    elif pos_neg == "Negative": # if node is negative, add to negative list
-                        neg_nodes.append(n)
-
-    return node_info, labeled_nodes, pos_nodes, neg_nodes
+######
+def get_tag(triangle, pos_nodes, neg_nodes):
+    assert(len(triangle) == 3)
+    tag = ''    
+    for node in triangle:
+        label = get_node_label(node, pos_nodes, neg_nodes)
+        tag+= label +str('_')
+    return get_key(tag)
 
 
+### get master triangle dictionary
+# uses all the triangles
+
+def get_triangle_dictionary(all_triangles, pos_nodes, neg_nodes, all_keys):
+    
+    # Initialize an empty dictionary with all possible combinations of labels
+    triangles_dict = {}
+    for key in all_keys:
+        #print('Initializing keys, key = '+str(key)+' len = '+str(len(key)))
+        assert(len(key) == 12 or len(key) == 10 or len(key) == 8 or len(key) == 6)
+        triangles_dict[key] = []
+    #print(triangles_dict)
+    #print('\n')
+    #print('len triangles_dict = '+str(len(triangles_dict)))
+    #print('len all keys = '+str(len(all_keys)))
+    assert(len(triangles_dict) == len(all_keys))
+    for triangle in all_triangles:
+        #print('current triangle in get_triangle_dict = '+str(triangle))
+        assert(len(triangle) == 3)
+        key = get_tag(triangle, pos_nodes, neg_nodes)
+        triangles_dict[key] += [triangle]
+    return triangles_dict
+        
+def get_highlighted_edges(all_triangles):
+    highlighted_edges = []
+    for triangle in all_triangles:
+        highlighted_edges += [[triangle[0], triangle[1]], 
+                              [triangle[0], triangle[2]],
+                              [triangle[1], triangle[2]]]
+    # Set them so that they're easier to look up in viz_graph
+    return highlighted_edges
 
 ## author: Anna Ritz, modified by aliya  ghassaei
 ## Posts the graph G to GraphSpace and shares it with the group.
@@ -298,23 +327,31 @@ def post_to_graphspace(G,post_group=True):
 # RETURNS: None, just posts graph
 ###akdjfaksdf cgeck spelling on nmii
 #############
-def viz_graph(nodes, edges, highlighted_edges, pos_nodes, neg_nodes, NMII = ['sqh', 'zip']):
+def viz_graph(nodes, edges, highlighted_edges, pos_nodes, neg_nodes, special):
     print('Visualizing graph...')
     G = GSGraph() # Create a graph object
     G.set_tags(['HW4']) ## tags help you organize your graphs
+    counter = 0
     for n in nodes:
-        if n in set(pos_nodes): 
-            color = '#d2639e' 
+        print(n)
+        if n in set(pos_nodes) and n not in special: 
+            print('first condition')
+            color = '#ea00b5' 
         elif n in set(neg_nodes):
-            color = '#63d297'
-        elif n in NMII:
-            color = '#e7e7e7'
-        #random color
+            print('second condition')
+            color = '#00b5ea' 
+        elif n in special:
+            print('special!')
+            color = '#9e007a'
+        #random color, if unlabeled
         else:
-            color = '#ee4443'
+            print('else')
+            color = '#b5ea00'
         G.add_node(n,label=n)    
         G.add_node_style(n,color=color,shape='ellipse',height=40,width=40)
         # popup?
+        counter+=1
+    assert(counter == len(nodes))
     for edge in edges:
         if edge in highlighted_edges or [edge[1], edge[0]] in highlighted_edges:
             G.add_edge(edge[0], edge[1])
