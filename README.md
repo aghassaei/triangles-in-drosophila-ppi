@@ -4,7 +4,7 @@
 turning this in because I'd like to add more to it before making it public. When I 
 make it public I will let you know!
 
-#Abstract
+# Abstract
 
 There are several ways to visualize the interactions of proteins. One of them is to create a graph 
 where each node is a protein and an edge between nodes symbolizes an interaction 
@@ -15,7 +15,7 @@ or both of the proteins in NMII. The most frequent triangles that contained NMII
 were those with one positive and two unlabeled nodes, followed by triangles with one 
 positive, one negative, and one unlabeled node.
 
-#Motivation
+# Motivation
 
 One of the aims in compiling the *Drosophila* interactome is to better understand how 
 NMII is regulated. Because there are so many proteins and protein-protein interactions, 
@@ -26,7 +26,7 @@ put time and resources into testing. This project aims to see whether the geomet
 have any biological relevance, which could inform the way that we make predictions for regulators 
 in the future. 
 
-#Methods
+# Methods
 
 Using the dataset ______ by _____, go terms?????, we construct a graph *G* with a set of nodes *V* (proteins) and a set of edges *E*, 
 the task is to find every triangle (set of three nodes) such that each node in the 
@@ -46,14 +46,14 @@ Below is a toy graph where all the triangles have bolded edges:
 
 ![](images/example_graph.png)
 
-*This graph may also be viewed ![here](http://graphspace.org/graphs/33194?user_layout=14638) on GraphSpace*
+*This graph may also be viewed [here](http://graphspace.org/graphs/33194?user_layout=14638) on GraphSpace*
 
 For the actual *Drosophila* interactome, there were 1916 triangles in total that had 
 one or both of NMII protreins in their set, so only 25 triangles were vizualied:
 
 ![](images/sample_triangles.png)
 
-*This graph may also be viewed ![here](http://graphspace.org/graphs/33193?auto_layout=cola#) on GraphSpace*
+*This graph may also be viewed [here](http://graphspace.org/graphs/33193?auto_layout=cola#) on GraphSpace*
 
 In addition to the GraphSpace graphs, the program also prints the percentages of triangles found for 
 each possible combination of node labels. Below is a list of all possible combinations* and how they are 
@@ -73,13 +73,13 @@ labeled `pos`, therefore all triangle sets much have at least one `pos` node bec
 only finds triangles with NMII.*
 
 
-To run the code, you must use a version of Python that supports the ![GraphSpace Python Client](http://manual.graphspace.org/projects/graphspace-python/en/latest/) 
+To run the code, you must use a version of Python that supports the [GraphSpace Python Client](http://manual.graphspace.org/projects/graphspace-python/en/latest/) 
 From there, type `main.py` to run the program on the *Drosophila* interactome or 
 `example.py` to generate the example graph. The program will prompt you to put in an 
 email address and password associated with your GraphSpace account. After generating 
 the graph, it will print the percentages of each type of triange found to the screen.
 
-#Results
+# Results
 
 The program produced 1916 triangles in total that contained NMII. Below are is a 
 breakdown of the frequency of each type of triangle:
@@ -100,7 +100,7 @@ and two unlabeled nodes. The next most commonly ocurring type were those with on
 and one unknown label. This means that it was more likely for a NMII protein to 
 participate in triangles with one negative and one unlabeled node, or two unlabeled nodes.
 
-#Discussion
+# Discussion
 
 In one paragraph, discuss how your findings (or anticipated findings) would
 fit into the bigger biological problem/question.
