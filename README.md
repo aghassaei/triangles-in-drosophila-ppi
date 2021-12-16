@@ -21,8 +21,7 @@ To find all such triangles, the program reads the file `flybase-interactome.txt`
 
 *This graph may also be viewed [here](http://graphspace.org/graphs/33194?user_layout=14638) on GraphSpace*
 
-For the actual *Drosophila* interactome, there were 1916 triangles in total that had 
-one or both of NMII protreins in their set, so only 25 triangles were vizualied. In addition to the GraphSpace graphs, the program also prints the percentages of triangles found for each possible combination of node labels. Below is a list of all possible combinations* and how they are represented in the program:
+For the actual *Drosophila* interactome, there were 1916 triangles in total that had one or both of NMII protreins in their set, so only 25 triangles were vizualied due to space constraints. In addition to the GraphSpace graphs, the program also prints the percentages of triangles found for each possible combination of node labels. Below is a list of all possible combinations* and how they are represented in the program:
 
 | Type | Significance | Representation in code |
 | ---- | ----- | ---------- |
