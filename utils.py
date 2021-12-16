@@ -488,25 +488,25 @@ def viz_graph(triangle_nodes, edges_to_post, pos_nodes, neg_nodes, special):
         if n in pos_nodes: 
             if n not in special:#print('in pos')
                 color = '#ea00b5'
-                height=40
-                width=40
+                height=60
+                width=60
             else:
                 print('special')
                 color = '#9e007a'
-                height = 50
-                width = 50
+                height = 60
+                width = 60
         if n in neg_nodes:
             #print('in neg')
             color = '#00b5ea'
-            height=40
-            width=40
+            height=60
+            width=60
         if n not in set(neg_nodes) and n not in set(pos_nodes):
         #random color, if unlabeled
         
             #print('unlabeled')
             color = '#b5ea00'
-            height=40
-            width=40
+            height=60
+            width=60
         G.add_node(n,label=n)    
         G.add_node_style(n,color=color,shape='ellipse',height=height,width=width)
         # popup?
