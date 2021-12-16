@@ -4,6 +4,8 @@ final project
 
 ask them if they want me to link the girhub into their things
 
+cite anna correctly on viz graph
+
 # plan
 
 make toy graph to answer question: how do i want to figure out what/how many triangles 
