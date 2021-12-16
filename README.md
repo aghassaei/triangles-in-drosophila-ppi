@@ -28,7 +28,7 @@ in the future.
 
 # Methods
 
-Using the dataset ______ by _____, go terms?????, we construct a graph *G* with a set of nodes *V* (proteins) and a set of edges *E*, 
+Using the fly interactome linked [here](https://github.com/annaritz/fly-interactome), we construct a graph *G* with a set of nodes *V* (proteins) and a set of edges *E*, 
 the task is to find every triangle (set of three nodes) such that each node in the 
 set is connected by an edge to both of the remaining nodes. For this project, we are 
 only interested in the triangles that contain one or both of the proteins in NMII. 
@@ -86,12 +86,12 @@ breakdown of the frequency of each type of triangle:
 
 | Type | Total | Percentage |
 | ---- | ----- | ---------- |
-| pos/pos/pos | 5 | 0.26|
-| pos/pos/neg | 39 | 2 |
-| pos/neg/neg | 71 | 3.71 |
-| pos/pos/u | 77 | 4.02 |
 | pos/u/u | 1174 | 61.27 |
 | pos/neg/u | 550 | 28.71 |
+| pos/pos/u | 77 | 4.02 |
+| pos/neg/neg | 71 | 3.71 |
+| pos/pos/neg | 39 | 2 |
+| pos/pos/pos | 5 | 0.26|
 
 ![](images/results.png)
 
@@ -102,15 +102,52 @@ participate in triangles with one negative and one unlabeled node, or two unlabe
 
 # Discussion
 
-In one paragraph, discuss how your findings (or anticipated findings) would
-fit into the bigger biological problem/question.
+In doing this project, I was hoping to use the frequency of the types of trianges to 
+make predictions about what other triangles, perhaps not connected to NMII and without labels, could 
+mean biologically. For example, if all triangles that were found were of type pos/pos/pos, then that would 
+mean that if a set containing one NMII protein and two unlabeled proteins might likely also be 
+of type pos/pos/pos, once the two unlabeled proteins were experimented on. However, the most common 
+combination was pos/u/u, which does not tell us as much about the underlying biology since the role of two of 
+the three nodes in unknown. It does tell us that there are many triangle structures 
+that NMII participates in that contain unlabeled nodes, so it will be interesting to see 
+if there is more data on these unlabeled nodes in the future to run the program again and see 
+how that changes the percentages of triangle types. It is worth mentioning that, excluding 
+the triangles with unlabeled nodes, the most common combination was pos/neg/neg. 
+This means that it was actually more likely, given the data that we currently have, 
+for NMII to participate in triangles with the majority of nodes being negative rather 
+than positive. It is difficult to say what this means about the biology, except that NMII 
+interacts with many nodes that do not regulate it.
 
 # References
 
-ask them if they want me to link the girhub into their things
+The fly interactome was sourced from [`fly-interactome` public GitHub repository](https://github.com/annaritz/fly-interactome), which used 
+the following sources (table created by Anna Ritz) to compile the edges:
 
-cite anna correctly on viz graph
+| Source | Description | # Edges |
+| :--- | :--- | :---: |
+| [DroID](databases/DroID) | Y2H, Co-Complex, & Ortholog Mapping | 222,400 |
+| [FlyMine](databases/flyMine) | Y2H and other PPIs, miRNA target predictions | 49,087 |
+| [mentha](databases/Mentha) | Experimentally-determined physical interactions | 40,483 |
+| [myProteinNet](databases/myProteinNet) | PPI data from 11 sources | 38,290 |
+| [SignaLink2.0](databases/SignaLink) | PPIs and post-translational interactions | 2,073 |
+| [flyReactome](databases/flyReactome) | Manually curated reactions annotated to 8 pathways | 410 |
+|  | **Total Unique Edges** | **233,054** |
 
-That is ok! Make sure you link to the original fly interactome 
-GitHub url, and you can copy the tables of the GO terms from the NMII README.md file. 
-Those are also public (from the Gene Ontology website)
+Additionally, the following tables indicate where the positive and negative labeles 
+came from:
+
+| Positive Node Groups | Description | # Nodes |
+| :--- | :--- | :---: |
+| gastrulation_GO0007369 | [Gastrulation GO Term](http://amigo.geneontology.org/amigo/term/GO:0007369) | 89 |
+| apical_constriction_GO0003383 | [Apical Constriction GO Term](http://amigo.geneontology.org/amigo/term/GO:0003383) | 22 |
+| Manning2014 | Fog Pathway (from [Manning et al., 2014](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4182926/)) | 19 |
+|  | **Total Positives** | **104** |
+
+| Negative Node Groups | Description | # Nodes |
+| :--- | :--- | :---: |
+| autophagy_GO0006914 | [Autophagy GO Term](http://amigo.geneontology.org/amigo/term/GO:0006914) | 153 |
+| regulation_of_immune_response_GO0050776 | [Regulation of Immune Response GO Term](http://amigo.geneontology.org/amigo/term/GO:0050776) | 141 |
+| pigmentation_GO0043473 | [Pigmentation GO Term](http://amigo.geneontology.org/amigo/term/GO:0043473) | 76 |
+| regulation_of_cell_growth_GO0001558 | [Regulation of Cell Growth GO Term](http://amigo.geneontology.org/amigo/term/GO:0001558) | 72 |
+| regulation_of_circadian_rhythm_GO0042752 |  [Regulation of Circadian Rhythm GO Term](http://amigo.geneontology.org/amigo/term/GO:0042752) | 69 |
+|  | **Total Negatives** | **470** |
