@@ -171,7 +171,7 @@ def trim_graph(all_triangles):
 ## INPUTS: None
 ## OUTPUTS: 
 def read_labeled_nodes_example():
-    posneg_file = 'example_labels.txt'
+    posneg_file = 'inputs/example_labels.txt'
     print("Reading "+posneg_file+'...')
     
     # Initializing dictionary and lists
@@ -212,7 +212,7 @@ def read_labeled_nodes_example():
 ## fix notes about running as necessary, if i decide to put it in a folder
 def read_labeled_nodes():
     print('Reading labeled-nodes.txt')
-    posneg_file = 'labeled-nodes.txt'
+    posneg_file = 'inputs/labeled-nodes.txt'
     
     # Initialize dictionary and lists
     node_info = {}

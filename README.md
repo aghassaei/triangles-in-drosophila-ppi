@@ -1,5 +1,29 @@
-# triangles
-final project
+# Identifying Triangles in Drosophila (spelling) Interactome
+
+#Abstract
+
+There are several ways to visualize the interactions of proteins. One of them is to create a graph 
+where each node is a protein and an edge between nodes symbolizes an interaction 
+between those two proteins. After visualizing such a graph, there are certain shapes that emerge (spelling). Given a protein-protein interactome (PPI) of *Drosophila (spelling)*, the objective 
+of this project is to identify all triangles that contain one of the proteins in non-muscle myosin (NMII). Using 
+an algorythm to find these triangles, I identified all triangles that contain one 
+or both of the proteins in NMII. I found that 
+
+In a few sentences, describe the purpose of the project, the approach, and
+the results. This should summarize the whole project.
+Motivation In a few sentences, describe the biological problem, and why a computa-
+tional approach may be useful.
+Methods Include a concise description of
+1.Graphs and the computational problem
+2.Approaches you used
+3.Datasets/Inputss
+4.Output Types (a list of predictions? A GraphSpace graph? Etc.)
+Results In one paragraph, summarize your findings
+Discussion In one paragraph, discuss how your findings (or anticipated findings) would
+fit into the bigger biological problem/question.
+References List of references you used.
+Figures/pictures can be very useful to describe graphs, the computational problem, and the
+results. URLs to GraphSpace graphs are also useful.
 
 
 ask them if they want me to link the girhub into their things
@@ -21,15 +45,13 @@ include thing in screenshots
 
 | Type | Total | Percentage |
 | ---- | ----- | ---------- |
-| pos/pos/pos | 5 | 0.2609603340292276 |
-| pos/pos/neg | 39 | 2.035490605427975 |
-| pos/neg/neg | 71 | 3.7056367432150314 |
-| pos/pos/u | 77 | 4.018789144050104 |
-| pos/u/u | 1174 | 61.27348643006263 |
-| pos/neg/u | 550 | 28.70563674321503 |
+| pos/pos/pos | 5 | 0.26|
+| pos/pos/neg | 39 | 2 |
+| pos/neg/neg | 71 | 3.71 |
+| pos/pos/u | 77 | 4.02 |
+| pos/u/u | 1174 | 61.27 |
+| pos/neg/u | 550 | 28.71 |
 
-
-### add somme asserts for these, since there should never be any::
 
 wasn't possible to have these since we needed at least 1 nmii (listed as a positive)
 there were 0 triangles of type neg_neg_neg_, which made up 0.0 of the triangles
