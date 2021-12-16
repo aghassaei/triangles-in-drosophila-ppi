@@ -54,6 +54,7 @@ The program produced 1916 triangles in total that contained NMII. Below is a bre
 | pos/pos/pos | 5 | 0.26|
 
 ![](images/results.png)
+*Chart generated using [RapidTables](https://www.rapidtables.com/tools/pie-chart.html)
 
 Twenty five of these triangles were visualized in GraphSpace:
 
