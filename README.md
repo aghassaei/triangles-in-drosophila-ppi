@@ -15,6 +15,8 @@ put in ascending order
 
 1916 triangles in total
 
+include thing in screenshots
+
 | Type | Total | Percentage |
 | ---- | ----- | ---------- |
 | pos/pos/pos | 5 | 0.2609603340292276 |
@@ -24,6 +26,10 @@ put in ascending order
 | pos/u/u | 1174 | 61.27348643006263 |
 | pos/neg/u | 550 | 28.70563674321503 |
 
+
+### add somme asserts for these, since there should never be any::
+
+wasn't possible to have these since we needed at least 1 nmii (listed as a positive)
 there were 0 triangles of type neg_neg_neg_, which made up 0.0 of the triangles
 there were 0 triangles of type neg_neg_u_, which made up 0.0 of the triangles
 there were 0 triangles of type neg_u_u_, which made up 0.0 of the triangles
