@@ -7,37 +7,34 @@ where each node is a protein and an edge between nodes symbolizes an interaction
 between those two proteins. After visualizing such a graph, there are certain shapes that emerge (spelling). Given a protein-protein interactome (PPI) of *Drosophila (spelling)*, the objective 
 of this project is to identify all triangles that contain one of the proteins in non-muscle myosin (NMII). Using 
 an algorythm to find these triangles, I identified all triangles that contain one 
-or both of the proteins in NMII. I found that 
+or both of the proteins in NMII. (say that I analyzed the type) I found that the most common type of triangle in 
+this sample was _________.
 
-In a few sentences, describe the purpose of the project, the approach, and
-the results. This should summarize the whole project.
-Motivation In a few sentences, describe the biological problem, and why a computa-
-tional approach may be useful.
-Methods Include a concise description of
+#Motivation
+
+describe nmii biological problem
+Many algorithms have been implemented that analyze the structure in different ways. 
+The motivation behind this project was to find start to explore whether the shapes 
+created by nodes and edges have any biological significance. It could also prove to be 
+a way of predicting what role currently unlabeled nodes play in NMII regulation.
+
+#Methods
+
 1.Graphs and the computational problem
+
+include images here
+
 2.Approaches you used
 3.Datasets/Inputss
 4.Output Types (a list of predictions? A GraphSpace graph? Etc.)
-Results In one paragraph, summarize your findings
-Discussion In one paragraph, discuss how your findings (or anticipated findings) would
-fit into the bigger biological problem/question.
-References List of references you used.
-Figures/pictures can be very useful to describe graphs, the computational problem, and the
-results. URLs to GraphSpace graphs are also useful.
 
+#Results
+In one paragraph, summarize your findings
 
-ask them if they want me to link the girhub into their things
+pie chart and sample nodes
 
-cite anna correctly on viz graph
+graphspace link
 
-# plan
-
-make toy graph to answer question: how do i want to figure out what/how many triangles 
-a given node is a part of
-
-change percentages later
-
-put in ascending order
 
 1916 triangles in total
 
@@ -51,6 +48,21 @@ include thing in screenshots
 | pos/pos/u | 77 | 4.02 |
 | pos/u/u | 1174 | 61.27 |
 | pos/neg/u | 550 | 28.71 |
+
+
+#Discussion
+
+In one paragraph, discuss how your findings (or anticipated findings) would
+fit into the bigger biological problem/question.
+
+# References
+Figures/pictures can be very useful to describe graphs, the computational problem, and the
+results. URLs to GraphSpace graphs are also useful.
+
+
+ask them if they want me to link the girhub into their things
+
+cite anna correctly on viz graph
 
 
 wasn't possible to have these since we needed at least 1 nmii (listed as a positive)
