@@ -91,7 +91,7 @@ breakdown of the frequency of each type of triangle:
 
 ![](images/results.png)
 
-*Generated with ![RapidTables](https://www.rapidtables.com/tools/pie-chart.html)
+*Generated with ![RapidTables](https://www.rapidtables.com/tools/pie-chart.html)*
 
 Of the 1916 triangles, the most commonly occuring type were those with one positive node 
 and two unlabeled nodes. The next most commonly ocurring type were those with one positive, one negative, 
