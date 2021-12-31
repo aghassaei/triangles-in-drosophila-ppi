@@ -1,14 +1,10 @@
-# Identifying Triangles in Drosophila (spelling) Interactome
-
-**Note for Anna:** This repository is complete but still private at the time that I am 
-turning this in because I'd like to add more to it before making it public. When I 
-make it public I will let you know!
+# Identifying Triangles in Drosophila Interactome
 
 # Abstract
 
 There are several ways to visualize the interactions of proteins. One of them is to create a graph 
 where each node is a protein and an edge between nodes symbolizes an interaction 
-between those two proteins. After visualizing such a graph, there are certain shapes that emerge (spelling). Given a protein-protein interactome (PPI) of *Drosophila (spelling)*, the objective 
+between those two proteins. After visualizing such a graph, there are certain shapes that emerge. Given a protein-protein interactome (PPI) of *Drosophila*, the objective 
 of this project is to identify all triangles that contain one of the proteins in non-muscle myosin (NMII). Using 
 an algorythm to find these triangles, I identified all triangles that contain one 
 or both of the proteins in NMII. The most frequent triangles that contained NMII 
