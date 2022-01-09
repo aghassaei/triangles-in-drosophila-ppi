@@ -1,5 +1,7 @@
 # Identifying Triangles in Drosophila Interactome
 
+Mentored by ![Anna Ritz}(https://github.com/annaritz)
+
 # Abstract
 
 There are several ways to visualize the interactions of proteins. One of them is to create a graph 
