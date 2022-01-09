@@ -1,6 +1,6 @@
 # Identifying Triangles in Drosophila Interactome
 
-Mentored by ![Anna Ritz}(https://github.com/annaritz)
+Mentored by ![Anna Ritz](https://github.com/annaritz)
 
 # Abstract
 
